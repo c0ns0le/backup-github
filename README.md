@@ -1,12 +1,12 @@
-# backup-github
-Backup all your repos to a single zip file
+## Backup-github
+Backup all your repos to a single zip file.
 
-# How to install?
+## How to install?
 
 Use the following command:
 
 ```
-yarn add https://github.com/selfrefactor/backup-github#0.1.0
+yarn add https://github.com/selfrefactor/backup-github#0.2.0
 ```
 
 Example use
@@ -18,3 +18,11 @@ backupGithub({username: 'selfrefactor'})
   .then(console.log)
   .catch(console.log)
 ```
+
+## API
+
+### backupGithub({username, output})
+
+- username - Github username
+
+- output - output directory where the zip file will be generated. The name of the zip file is `backup-github.zip`.
