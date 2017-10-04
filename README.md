@@ -25,4 +25,4 @@ backupGithub({username: 'selfrefactor'})
 
 - username - Github username
 
-- output - output directory where the zip file will be generated. The name of the zip file is `backup-github.zip`.
+- output(optional) - Absolute path for output directory where the zip file will be generated. The name of the generated zip file is `backup-github.zip`.
