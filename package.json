@@ -1,9 +1,18 @@
 {
+  "name": "backup-github",
+  "version": "0.2.0",
+  "main": "src/index.js",
   "dependencies": {
+    "fs-extra": "^4.0.2",
     "puppeteer": "https://github.com/GoogleChrome/puppeteer/",
-    "rambdax": "^0.6.1"
+    "rambdax": "^0.6.1",
+    "zip-folder": "^1.0.0"
   },
   "devDependencies": {
     "env-fn": "^1.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/selfrefactor/backup-github.git"
   }
 }

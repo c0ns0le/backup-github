@@ -1,49 +1,63 @@
 const puppeteer = require('puppeteer')
 const R = require('rambdax')
+const fs = require('fs-extra')
+const path = require('path')
 const getSettings = require('./modules/getSettings')
-const typeModule = require('./modules/type')
-const clickLoginSubmit = require('./modules/clickLoginSubmit')
+const cloneRepo = require('./modules/cloneRepo')
+const createZip = require('./modules/createZip')
 
 const selectors = {
-  username: '#login_field',
-  password: '#password',
-  clickLoginSubmit: '.btn-primary'
+  allRepos: 'a[itemprop="name codeRepository"]'
 }
 
+const resolution = {x:1366, y:768}
 const TIMEOUT = 50000
 
-module.exports = async function backupGithub({username, password, resolution}){
+module.exports = async function backupGithub({username, output}){
+  const tempDirectory = path.join(__dirname,'files')
+
+  fs.ensureDirSync(tempDirectory)
+
+  const outputValue = R.typedDefaultTo(__dirname, output)
+
+  const zipLocation = await R.composeAsync(
+    async ()=> createZip(outputValue),
+    ()=>console.log('All repos are cloned. Now proceed to generating the zip file.'),
+    R.mapFastAsync(async repo => cloneRepo(repo))
+  )(await getAllRepos(username))
+
+  console.log('Backup of your Github repos is done.')
+  console.log(`Location of zip file is ${zipLocation}`)
+
+  fs.removeSync(tempDirectory)
+}
+
+const getAllReposFn = selector => {
+  const elements = document.querySelectorAll(selector)
+  return Array.from(elements).map(x => x.textContent.trim())
+}
+
+async function getAllRepos(username){
   try{
-    const resolutionValue = R.typedDefaultTo({x:1366, y:768}, resolution)
-    var browser = await puppeteer.launch(getSettings(resolutionValue))
+    var browser = await puppeteer.launch(getSettings(resolution))
     var page = await browser.newPage()
     await page.setViewport({
-      width  : resolutionValue.x,
-      height : resolutionValue.y,
+      width  : resolution.x,
+      height : resolution.y,
     })
 
-    const type = R.partialCurry(typeModule, {page})
-
-    const url = 'https://github.com/login'
-    await page.goto(url, {
+    const urlRepo = `https://github.com/${username}?tab=repositories`
+    await page.goto(urlRepo, {
       waitUntil : 'networkidle',
       timeout   : TIMEOUT,
     })
 
-    await type({
-      selector: selectors.username,
-      text: username
-    })
-    await type({
-      selector: selectors.password,
-      text: password
-    })
-    await page.evaluate(clickLoginSubmit, selectors.clickLoginSubmit)
-    await R.delay(300000)
+    const allRepos = await page.evaluate(getAllReposFn, selectors.allRepos)
+    await browser.close()
+
+    return allRepos
   }catch(err){
     console.log(err)
-  }finally{
-
+    process.exit()
   }
-
 }
