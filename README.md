@@ -9,7 +9,7 @@ Use the following command:
 yarn add https://github.com/selfrefactor/backup-github#0.2.0
 ```
 
-Example use
+## Example use
 
 ```
 const backupGithub = require('backup-github')
