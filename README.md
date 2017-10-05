@@ -19,10 +19,12 @@ backupGithub({username: 'selfrefactor'})
   .catch(console.log)
 ```
 
+You will receive information in the console about the progress as well as the location of the generated zip file.
+
 ## API
 
 ### backupGithub({username, output})
 
 - username - Github username
 
-- output(optional) - Absolute path for output directory where the zip file will be generated. The name of the generated zip file is `backup-github.zip`.
+- output(optional) - Absolute path of the directory where the zip file will be generated. The name of the generated zip file is `backup-github.zip`.
