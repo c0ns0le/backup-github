@@ -17,7 +17,7 @@ async function backupGithub ({ username, output }) {
   const zipLocation = await R.composeAsync(
     async () => createZip(outputValue),
     () => console.log('All repos are cloned. Now proceed to generating the zip file.'),
-    R.mapFastAsync(async repo => cloneRepo(repo)),
+    R.mapFastAsync(async repo => cloneRepo({repo,username})),
     R.tap(x=>{
       log(`Puppeteer scraped all repos for account ${username}`,'info')
       log({numberRepos: x.length},'pattern')

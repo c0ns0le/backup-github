@@ -1,7 +1,7 @@
 const execCommand = require('./execCommand')
 
-const cloneRepo = async repo => {
-  const command = `https://github.com/selfrefactor/${ repo }.git`
+const cloneRepo = async ({repo,username}) => {
+  const command = `https://github.com/${username}/${ repo }.git`
 
   return execCommand(`git clone ${ command }`)
 }
