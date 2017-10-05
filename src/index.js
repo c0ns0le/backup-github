@@ -18,12 +18,13 @@ async function backupGithub ({ username, output }) {
     async () => createZip(outputValue),
     () => {
       log('stopspin')
-      log('All repos are cloned. Now proceed to generating the zip file.', 'info')
+      log('All repos are cloned. Now proceed to generating the zip file.', 'spin')
     },
     R.mapFastAsync(async repo => cloneRepo({
       repo,
       username,
     })),
+    R.takeLast(2),
     R.tap(x => {
       log(`Puppeteer scraped all repos for account ${ username }`, 'info')
       log({ numberRepos : x.length }, 'pattern')
@@ -31,6 +32,7 @@ async function backupGithub ({ username, output }) {
     })
   )(await getAllRepos(username))
 
+  log('stopspin')
   log('Backup of your Github repos is done.', 'success')
   log(`Location of zip file is ${ zipLocation }`, 'info')
 
