@@ -16,7 +16,7 @@ const getSettings = ({ x, y }) => {
   return {
     args         : args,
     handleSIGINT : false,
-    headless     : false,
+    headless     : true,
   }
 }
 
