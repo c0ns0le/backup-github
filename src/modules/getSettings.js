@@ -1,4 +1,4 @@
-module.exports = ({x,y}) => {
+const getSettings = ({ x, y }) => {
   const args = [
     '--no-first-run',
     '--disable-sync',
@@ -16,6 +16,8 @@ module.exports = ({x,y}) => {
   return {
     args         : args,
     handleSIGINT : false,
-    headless     : true,
+    headless     : false,
   }
 }
+
+module.exports = getSettings

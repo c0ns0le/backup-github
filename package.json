@@ -8,9 +8,7 @@
     "rambdax": "^0.6.1",
     "zip-folder": "^1.0.0"
   },
-  "devDependencies": {
-    "env-fn": "^1.1.1"
-  },
+  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/selfrefactor/backup-github.git"

@@ -6,7 +6,7 @@ Backup all your repos to a single zip file.
 Use the following command:
 
 ```
-yarn add https://github.com/selfrefactor/backup-github#0.2.0
+yarn add https://github.com/selfrefactor/backup-github#0.3.0
 ```
 
 ## Example use
